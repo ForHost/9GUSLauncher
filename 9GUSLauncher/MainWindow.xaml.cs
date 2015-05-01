@@ -45,6 +45,8 @@ namespace _9GUSLauncher
         public string masterServer = null;
         public string _userName = null;
         public string _passWord = null;
+        public string armaPath = null;
+        public string modPath = null;
         public string assemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
         public static string myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         public static string workingDir = myDocuments + "\\9GUSL";
@@ -472,6 +474,38 @@ namespace _9GUSLauncher
             }
             return new Uri(@"pack://application:,,,/" + assembly.GetName().Name + ";component/" + pathInApplication, UriKind.Absolute);
         }
+
+
+        private void armaPathBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+            OpenFileDialog armaPath = new OpenFileDialog();
+            armaPath.Multiselect = false;
+
+            if(armaPath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if(!armaPath.FileName.Contains("arma3.exe"))
+                {
+                    MsgBox("Error", "Invalid ArmA 3 Path");
+                    return;
+                }
+                else
+                {
+                    armaPathTxt.Text = armaPath.FileName;
+                }
+            }
+        }
+
+        private void modPathBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog modPath = new FolderBrowserDialog();
+
+
+            if (modPath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                modPathTxt.Text = modPath.SelectedPath;
+            }
+        }
         #endregion
 
         #region Logger
@@ -511,13 +545,17 @@ namespace _9GUSLauncher
                 masterServer = ConfigurationManager.AppSettings["masterServer"];
                 _userName = ConfigurationManager.AppSettings["userName"];
                 _passWord = ConfigurationManager.AppSettings["passWord"];
+                armaPath = ConfigurationManager.AppSettings["armaPath"];
+                modPath = ConfigurationManager.AppSettings["modPath"];
 
                 //check if config is the latest
 
                 if (!ConfigurationManager.AppSettings.AllKeys.Contains("backgroundType") ||
                     !ConfigurationManager.AppSettings.AllKeys.Contains("masterServer") ||
                     !ConfigurationManager.AppSettings.AllKeys.Contains("userName") ||
-                    !ConfigurationManager.AppSettings.AllKeys.Contains("passWord"))
+                    !ConfigurationManager.AppSettings.AllKeys.Contains("passWord") ||
+                    !ConfigurationManager.AppSettings.AllKeys.Contains("armaPath") ||
+                    !ConfigurationManager.AppSettings.AllKeys.Contains("modPath"))
                 {
                     StandardLog("Config File Out of Date! Creating new one...");
 
@@ -604,9 +642,15 @@ namespace _9GUSLauncher
                 rememberMe.IsChecked = true;
             }
 
+            if(!string.IsNullOrEmpty(armaPath))
+            {
+                armaPathTxt.Text = armaPath.ToString();
+            }
 
-
-
+            if (!string.IsNullOrEmpty(modPath))
+            {
+                modPathTxt.Text = modPath.ToString();
+            }
 
         }
         #endregion
@@ -667,6 +711,16 @@ namespace _9GUSLauncher
                     UpdateSetting("userName", "");
                     UpdateSetting("passWord", "");
                 }
+            }
+
+            if(armaPathTxt.Text != string.Empty)
+            {
+                UpdateSetting("armaPath", armaPathTxt.Text);
+            }
+
+            if (modPathTxt.Text != string.Empty)
+            {
+                UpdateSetting("modPath", modPathTxt.Text);
             }
 
 
@@ -756,6 +810,7 @@ namespace _9GUSLauncher
             {
                 //User is banned
                 System.Windows.Forms.MessageBox.Show("The user " + user + " has been Banned from the 9GUSLauncher", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
                 Environment.Exit(0);
                 
             }
@@ -1063,6 +1118,7 @@ namespace _9GUSLauncher
         
 
         #endregion    
+
      
 
     }
