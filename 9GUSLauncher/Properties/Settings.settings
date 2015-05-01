@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="backgroundType" value="Background #1" />
+    <add key="masterServer" value="master.forhost.org" />
+    <add key="userName" value="" />
+    <add key="passWord" value="" />
+  </appSettings>
+</configuration>

@@ -1,0 +1,172 @@
+﻿<Controls:MetroWindow
+    
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:System="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d" x:Name="mainForm" x:Class="_9GUSLauncher.MainWindow"
+                      xmlns:gif="http://wpfanimatedgif.codeplex.com"
+                      Title="9GUSL | Developed by Dev.ForHost"
+                      Height="600"
+                      Width="1078"
+                      ShowTitleBar="True"
+                      ShowIconOnTitleBar="True"
+                      ResizeMode="CanMinimize"
+                      GlowBrush="{DynamicResource AccentColorBrush}" EnableDWMDropShadow="True" ContentRendered="mainForm_ContentRendered" Foreground="White" TitleForeground="White" TitleCaps="False" Closing="mainForm_Closing" Icon="Resources/Images/9gu.ico" KeyDown="mainForm_KeyDown" >
+
+
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>
+
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="Settings" Click="SettingsClick" />
+            <Button Click="Button_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20"
+                   Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill"
+                         Visual="{StaticResource appbar_code_xml}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Text="GitHub" />
+                </StackPanel>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl/>
+    </Controls:MetroWindow.Flyouts>
+
+    <Grid x:Name="GridDef">
+
+        <Grid.Background>
+            <ImageBrush x:Name="BrushGrid" ImageSource="Resources/Images/default.jpg"/>
+        </Grid.Background>
+        <StackPanel HorizontalAlignment="Left" Height="100" Margin="597,161,0,0" VerticalAlignment="Top" Width="100"/>
+
+        <Rectangle HorizontalAlignment="Left" Height="551" Margin="390,10,0,0" Stroke="White" VerticalAlignment="Top" Width="678"/>
+        <Grid HorizontalAlignment="Left" Height="126" Margin="0,1,0,0" VerticalAlignment="Top" Width="400">
+            <Rectangle HorizontalAlignment="Left" Height="106" Margin="10,9,0,0" Stroke="White" VerticalAlignment="Top" Width="375"/>
+            <Image x:Name="pictureBox1" HorizontalAlignment="Left" Height="79" VerticalAlignment="Top" Width="83" Source="Resources/Images/9GU_4.png" Margin="36,22,0,0" Cursor="Hand" MouseUp="pictureBox1_MouseUp"/>
+        </Grid>
+        <Label FontFamily="./Resources/Fonts/#Purista Light" Content="9thGenericUnit Server Launcher" HorizontalAlignment="Center" Margin="141,18,732,523" VerticalAlignment="Center" Height="30" Width="199" RenderTransformOrigin="0.517,0.198" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="13"/>
+        <Label FontFamily="./Resources/Fonts/#Purista Light" Content="Developed by ForHost Dev." HorizontalAlignment="Center" Margin="141,48,732,493" VerticalAlignment="Center" Height="30" Width="199" RenderTransformOrigin="0.517,0.198" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="13"/>
+        <Label FontFamily="./Resources/Fonts/#Purista Light" Content="Visit us at dev.forhost.org" HorizontalAlignment="Center" Margin="141,78,732,463" VerticalAlignment="Center" Height="30" Width="199" RenderTransformOrigin="0.517,0.198" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="13"/>
+        <Rectangle HorizontalAlignment="Left" Height="434" Margin="10,127,0,0" Stroke="White" VerticalAlignment="Top" Width="375"/>
+        <TextBox x:Name="txt_User" HorizontalAlignment="Left" Height="23" Margin="101,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <Label Content="Username" HorizontalAlignment="Left" Margin="23,174,0,0" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="txt_Pass" HorizontalAlignment="Left" Margin="101,205,0,0" VerticalAlignment="Top" Width="272"/>
+        <Separator HorizontalAlignment="Left" Height="8" Margin="26,329,0,0" VerticalAlignment="Top" Width="347" Background="White"/>
+        <Separator HorizontalAlignment="Left" Height="8" Margin="26,266,0,0" VerticalAlignment="Top" Width="347" Background="White"/>
+        <Separator HorizontalAlignment="Left" Height="8" Margin="26,161,0,0" VerticalAlignment="Top" Width="347" Background="White"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="23,205,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962"/>
+        <Button x:Name="login_button" Content="Login" HorizontalAlignment="Left" Margin="298,236,0,0" VerticalAlignment="Top" Width="75" Click="login_button_Click" RenderTransformOrigin="1,0.52"/>
+        <Label Content="Login with Forum Credentials" HorizontalAlignment="Left" Margin="101,132,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas"/>
+        <Menu x:Name="menu" HorizontalAlignment="Left" Height="38" Margin="26,283,0,0" VerticalAlignment="Top" Width="347">
+            <Canvas  ClipToBounds="True" x:Name="canMain" Height="28" Width="337" >
+                <TextBlock  FontFamily="./Resources/Fonts/#Purista Light" x:Name="tbmarquee" Width="1029" Height="27" Text="Loading News from config..." FontSize="18"/>
+            </Canvas>
+        </Menu>
+
+        <TextBox x:Name="textBoxLog" HorizontalAlignment="Left" Height="205" Margin="26,343,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347" AcceptsReturn="True" IsReadOnly="True" FontFamily="Consolas" FontSize="10"/>
+        <Label x:Name="labelLog" FontFamily="./Resources/Fonts/#Purista Light" Content="Login with Forum Credentials to use the Software" HorizontalAlignment="Center" Margin="405,18,20,24" VerticalAlignment="Center" Height="529" Width="647" RenderTransformOrigin="0.517,0.198" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" d:IsHidden="True"/>
+        <Label x:Name="fail_Label" Content="0" HorizontalAlignment="Center" Margin="272,236,779,310" VerticalAlignment="Center" Height="25" Width="21" RenderTransformOrigin="0.517,0.198" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="13" ToolTip="Failed login attempts on a maximum of 5"/>
+        <Controls:ProgressRing x:Name="progressRing" HorizontalAlignment="Left" Margin="350,133,0,0" VerticalAlignment="Top" Height="23" Width="23" RenderTransformOrigin="1,0.448" Foreground="#CCFF0000"/>
+        <CheckBox x:Name="rememberMe" Content="Remember Me" HorizontalAlignment="Left" Margin="26,239,0,0" VerticalAlignment="Top"/>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Margin="405,17,0,0" VerticalAlignment="Top" Height="544" Width="657" >
+            <TabItem x:Name="tabClient" Header="Client" FontFamily="./Resources/Fonts/#Purista Semibold">
+                <Grid>
+                    <TabControl Controls:TabControlHelper.IsUnderlined="True" HorizontalAlignment="Left" Height="492" VerticalAlignment="Top" Width="651">
+                        <TabItem Header="TabItem" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent">
+                            <Grid/>
+                        </TabItem>
+                        <TabItem Header="TabItem" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent">
+                            <Grid/>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabServer" Header="Server" FontFamily="./Resources/Fonts/#Purista Semibold">
+                <Grid>
+                    <Image gif:ImageBehavior.AnimatedSource="./Resources/Images/Working-under-pressure.gif" Margin="0,50,10,169"/>
+                    <Label HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontFamily="./Resources/Fonts/#Purista Light" Content="Actually Programming it! Coming Soon..." Margin="10,288,10,5" FontSize="24" Width="627" Height="201"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabAdmin" Header="Administration" FontFamily="./Resources/Fonts/#Purista Semibold">
+                <ScrollViewer Margin="0,2">
+                    <Grid Height="832" Width="648">
+                        <GroupBox FontFamily="./Resources/Fonts/#Purista Light" Header="Web Config" HorizontalAlignment="Left" Margin="8,10,0,0" VerticalAlignment="Top" Height="353" Width="613"/>
+                        <Label Content="Software:" HorizontalAlignment="Left" Margin="22,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="68"/>
+                        <TextBox x:Name="txt_Software" HorizontalAlignment="Left" Height="20" Margin="152,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="457" FontFamily="Consolas"/>
+                        <Button x:Name="newsUpdateBtn" Content="Save" HorizontalAlignment="Left" Margin="534,329,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1,0.52" Click="UpdateBtn_Click"/>
+                        <Label Content="News:" HorizontalAlignment="Left" Margin="22,264,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="43"/>
+                        <TextBox x:Name="txt_LatestVersion" HorizontalAlignment="Left" Height="20" Margin="152,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="457" FontFamily="Consolas"/>
+                        <TextBox x:Name="txt_Language" HorizontalAlignment="Left" Height="20" Margin="152,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="457" FontFamily="Consolas"/>
+                        <TextBox x:Name="txt_notAvailableMsg" HorizontalAlignment="Left" Height="53" Margin="152,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="457" FontFamily="Consolas" VerticalScrollBarVisibility="Auto"/>
+                        <TextBox x:Name="txt_MasterIP" HorizontalAlignment="Left" Height="20" Margin="152,202,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="457" FontFamily="Consolas"/>
+                        <TextBox x:Name="txt_MasterIPDNS" HorizontalAlignment="Left" Height="20" Margin="152,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="457" FontFamily="Consolas"/>
+                        <TextBox x:Name="txt_News" HorizontalAlignment="Left" Height="55" Margin="152,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="457" FontFamily="Consolas" VerticalScrollBarVisibility="Auto"/>
+                        <Label Content="MasterIP DNS:" HorizontalAlignment="Left" Margin="22,233,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="96"/>
+                        <Label Content="MasterIP:" HorizontalAlignment="Left" Margin="22,202,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="68"/>
+                        <Label Content="NotAvailable Msg:" HorizontalAlignment="Left" Margin="22,144,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="125"/>
+                        <Label Content="Language:" HorizontalAlignment="Left" Margin="22,113,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="68"/>
+                        <Label Content="Latest Version:" HorizontalAlignment="Left" Margin="22,84,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="110"/>
+                        <GroupBox FontFamily="./Resources/Fonts/#Purista Light" Header="Users System" HorizontalAlignment="Left" Margin="8,377,0,0" VerticalAlignment="Top" Height="366" Width="613"/>
+                        <Label Content="White List" HorizontalAlignment="Left" Margin="22,513,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="587" HorizontalContentAlignment="Center"/>
+                        <TextBox x:Name="txtWhiteList" HorizontalAlignment="Left" Height="20" Margin="89,542,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" FontFamily="Consolas"/>
+                        <Button x:Name="btnWhiteAdd" Content="Add User" HorizontalAlignment="Left" Margin="170,583,0,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="1,0.52" Click="btnWhiteAdd_Click"/>
+                        <Button x:Name="btnWhiteRem" Content="Remove User" HorizontalAlignment="Left" Margin="252,583,0,0" Width="86" RenderTransformOrigin="1,0.52" Click="btnWhiteRem_Click" Height="25" VerticalAlignment="Top"/>
+                        <Button x:Name="btnWhiteCheck" Content="Check if WhiteListed" HorizontalAlignment="Left" Margin="343,583,0,0" VerticalAlignment="Top" Width="127" RenderTransformOrigin="1,0.52" Click="btnWhiteCheck_Click"/>
+                        <Label Content="Ban list" HorizontalAlignment="Left" Margin="22,617,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="587" HorizontalContentAlignment="Center"/>
+                        <TextBox x:Name="txtBanList" HorizontalAlignment="Left" Height="20" Margin="89,646,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" FontFamily="Consolas"/>
+                        <Button x:Name="btnBanAdd" Content="Add User" HorizontalAlignment="Left" Margin="170,687,0,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="1,0.52" Click="btnBanAdd_Click" />
+                        <Button x:Name="btnBanRem" Content="Remove User" HorizontalAlignment="Left" Margin="252,687,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="1,0.52" Click="btnBanRem_Click" />
+                        <Button x:Name="btnBanCheck" Content="Check if Banned" HorizontalAlignment="Left" Margin="343,687,0,0" VerticalAlignment="Top" Width="127" RenderTransformOrigin="1,0.52" Click="btnBanCheck_Click"/>
+                        <Label Content="Administrators List" HorizontalAlignment="Left" Margin="22,411,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="587" HorizontalContentAlignment="Center"/>
+                        <TextBox x:Name="txtAdminList" HorizontalAlignment="Left" Height="20" Margin="89,440,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="458" FontFamily="Consolas"/>
+                        <Button x:Name="btnAdminAdd" Content="Add User" HorizontalAlignment="Left" Margin="170,481,0,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="1,0.52" Click="btnAdminAdd_Click"/>
+                        <Button x:Name="btnAdminRem" Content="Remove User" HorizontalAlignment="Left" Margin="252,481,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="1,0.52" Click="btnAdminRem_Click"/>
+                        <Button x:Name="btnAdminCheck" Content="Check if Admin" HorizontalAlignment="Left" Margin="343,481,0,0" VerticalAlignment="Top" Width="127" RenderTransformOrigin="1,0.52" Click="btnAdminCheck_Click"/>
+                        <Button x:Name="updateBtnUs" Content="Save" HorizontalAlignment="Left" Margin="534,707,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1,0.52" Click="updateBtnUs_Click"/>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+        <Controls:Flyout x:Name="SettingsPage" Header="Settings" Position="Right" Width="431" Margin="0,0,-9,0" d:IsHidden="True">
+            <!-- Your custom content here -->
+            <Grid HorizontalAlignment="Left" Height="494" Width="431" Background="#FF2B2B2B">
+                <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="188,29,0,0" VerticalAlignment="Top" Width="197" Loaded="comboBox1_Loaded" SelectionChanged="comboBox1_SelectionChanged"/>
+                <Label Content="Change app's background:" HorizontalAlignment="Left" Margin="15,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas"/>
+                <Label Content="Config path:" HorizontalAlignment="Left" Margin="15,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas"/>
+                <TextBox x:Name="txt_Settings" HorizontalAlignment="Left" Height="23" Margin="109,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="276" IsReadOnly="True"/>
+            </Grid>
+        </Controls:Flyout>
+        <Controls:Flyout x:Name="appBar" Position="Bottom"
+                             CloseButtonVisibility="Collapsed"
+                             TitleVisibility="Collapsed"
+                             IsPinned="False"
+                             Height="75" d:IsHidden="True">
+
+            <Grid Height="75" VerticalAlignment="Top" Width="1051">
+                <TextBlock FontFamily="./Resources/Fonts/#Purista Light" x:Name="appBarText" VerticalAlignment="Center"
+        			Text="" FontSize="16" />
+                <Button x:Name="appBarClose"  HorizontalAlignment="Left" Width="75" Content="Close" RenderTransformOrigin="1,0.52" Height="25" VerticalAlignment="Top" Margin="966,26,0,0" Click="appBarClose_Click"/>
+            </Grid>
+        </Controls:Flyout>
+        <Grid x:Name="installGrid" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="1090" Background="#FF252525" Margin="0,0,-18,0" Visibility="Hidden" d:IsHidden="True">
+            <Label x:Name="workingLabel" FontFamily="./Resources/Fonts/#Purista Light" Content="Installing..." HorizontalAlignment="Center" VerticalAlignment="Center" Height="571" Width="1082" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" Margin="0,0,-10,0"/>
+        </Grid>
+
+
+    </Grid>
+
+</Controls:MetroWindow>
