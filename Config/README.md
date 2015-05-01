@@ -1,3 +1,3 @@
-### The Idea<br>
+### Config<br>
 Config Files 
 
