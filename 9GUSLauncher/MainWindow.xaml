@@ -144,16 +144,16 @@
         <Controls:Flyout x:Name="SettingsPage" Header="Settings" Position="Right" Width="431" Margin="0,0,-9,0" d:IsHidden="True">
             <!-- Your custom content here -->
             <Grid HorizontalAlignment="Left" Height="494" Width="431" Background="#FF2B2B2B">
-                <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="188,29,0,0" VerticalAlignment="Top" Width="197" Loaded="comboBox1_Loaded" SelectionChanged="comboBox1_SelectionChanged"/>
-                <Label Content="Change app's background:" HorizontalAlignment="Left" Margin="15,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas"/>
-                <Label Content="Config path:" HorizontalAlignment="Left" Margin="15,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas"/>
+                <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="109,29,0,0" VerticalAlignment="Top" Width="276" Loaded="comboBox1_Loaded" SelectionChanged="comboBox1_SelectionChanged"/>
+                <Label Content="Background:" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="94" HorizontalContentAlignment="Right"/>
+                <Label Content="Config path:" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" HorizontalContentAlignment="Right" Width="94"/>
                 <TextBox x:Name="txt_Settings" HorizontalAlignment="Left" Height="23" Margin="109,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="276" IsReadOnly="True"/>
-                <Label Content="Arma Path:" HorizontalAlignment="Left" Margin="15,102,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas"/>
-                <TextBox x:Name="armaPathTxt" HorizontalAlignment="Left" Height="23" Margin="109,100,0,0" VerticalAlignment="Top" Width="247" IsReadOnly="True"/>
-                <Button x:Name="armaPathBtn" Content=". . ." HorizontalAlignment="Left" Margin="361,100,0,0" VerticalAlignment="Top" Width="24" Height="15" BorderThickness="1" Click="armaPathBtn_Click" RenderTransformOrigin="-0.742,0.544"/>
-                <Label Content="Mod Path:" HorizontalAlignment="Left" Margin="15,132,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas"/>
-                <TextBox x:Name="modPathTxt" HorizontalAlignment="Left" Height="23" Margin="109,130,0,0" VerticalAlignment="Top" Width="247" IsReadOnly="True"/>
-                <Button x:Name="modPathBtn" Content=". . ." HorizontalAlignment="Left" Margin="361,132,0,0" VerticalAlignment="Top" Width="24" Height="15" BorderThickness="1" Click="modPathBtn_Click" RenderTransformOrigin="-0.742,0.544"/>
+                <Label Content="Arma Path:" HorizontalAlignment="Left" Margin="10,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="94" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="armaPathTxt" HorizontalAlignment="Left" Height="23" Margin="109,107,0,0" VerticalAlignment="Top" Width="247" IsReadOnly="True"/>
+                <Button x:Name="armaPathBtn" Content=". . ." HorizontalAlignment="Left" Margin="361,107,0,0" VerticalAlignment="Top" Width="24" Height="15" BorderThickness="1" Click="armaPathBtn_Click" RenderTransformOrigin="-0.742,0.544"/>
+                <Label Content="Mod Path:" HorizontalAlignment="Left" Margin="10,149,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="94" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="modPathTxt" HorizontalAlignment="Left" Height="23" Margin="109,147,0,0" VerticalAlignment="Top" Width="247" IsReadOnly="True"/>
+                <Button x:Name="modPathBtn" Content=". . ." HorizontalAlignment="Left" Margin="361,149,0,0" VerticalAlignment="Top" Width="24" Height="15" BorderThickness="1" Click="modPathBtn_Click" RenderTransformOrigin="-0.742,0.544"/>
             </Grid>
         </Controls:Flyout>
         <Controls:Flyout x:Name="appBar" Position="Bottom"
@@ -168,7 +168,7 @@
                 <Button x:Name="appBarClose"  HorizontalAlignment="Left" Width="75" Content="Close" RenderTransformOrigin="1,0.52" Height="25" VerticalAlignment="Top" Margin="966,26,0,0" Click="appBarClose_Click"/>
             </Grid>
         </Controls:Flyout>
-        <Grid x:Name="installGrid" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="1090" Background="#FF252525" Margin="0,0,-18,0" Visibility="Hidden" d:IsHidden="True">
+        <Grid x:Name="installGrid" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="1090" Background="#FF252525" Margin="0,0,-18,0" Visibility="Hidden">
             <Label x:Name="workingLabel" FontFamily="./Resources/Fonts/#Purista Light" Content="Installing..." HorizontalAlignment="Center" VerticalAlignment="Center" Height="571" Width="1082" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" Margin="0,0,-10,0"/>
         </Grid>
 
