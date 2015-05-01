@@ -41,6 +41,7 @@ namespace _9GUSLauncher
             InitializeComponent();
         }
 
+        #region Variables
         public string backgroundType = null;
         public string masterServer = null;
         public string _userName = null;
@@ -60,6 +61,7 @@ namespace _9GUSLauncher
         public static int result;
         public ProgressDialogController _controller;
         public ProgressDialogController _controller2;
+        #endregion
 
         #region Load
         private async void mainForm_ContentRendered(object sender, EventArgs e)
@@ -479,19 +481,18 @@ namespace _9GUSLauncher
         private void armaPathBtn_Click(object sender, RoutedEventArgs e)
         {
             
-            OpenFileDialog armaPath = new OpenFileDialog();
-            armaPath.Multiselect = false;
+            FolderBrowserDialog armaPath = new FolderBrowserDialog();
 
             if(armaPath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if(!armaPath.FileName.Contains("arma3.exe"))
+                if(!System.IO.File.Exists(armaPath.SelectedPath + "\\arma3.exe"))
                 {
-                    MsgBox("Error", "Invalid ArmA 3 Path");
+                    openAppBar("Error: Invalid ArmA 3 Path");
                     return;
                 }
                 else
                 {
-                    armaPathTxt.Text = armaPath.FileName;
+                    armaPathTxt.Text = armaPath.SelectedPath;
                 }
             }
         }

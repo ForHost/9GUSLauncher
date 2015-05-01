@@ -141,7 +141,7 @@
                 </ScrollViewer>
             </TabItem>
         </TabControl>
-        <Controls:Flyout x:Name="SettingsPage" Header="Settings" Position="Right" Width="431" Margin="0,0,-9,0">
+        <Controls:Flyout x:Name="SettingsPage" Header="Settings" Position="Right" Width="431" Margin="0,0,-9,0" d:IsHidden="True">
             <!-- Your custom content here -->
             <Grid HorizontalAlignment="Left" Height="494" Width="431" Background="#FF2B2B2B">
                 <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="188,29,0,0" VerticalAlignment="Top" Width="197" Loaded="comboBox1_Loaded" SelectionChanged="comboBox1_SelectionChanged"/>
@@ -160,7 +160,7 @@
                              CloseButtonVisibility="Collapsed"
                              TitleVisibility="Collapsed"
                              IsPinned="False"
-                             Height="75" d:IsHidden="True">
+                             Height="75" BorderThickness="0" Background="#FF252525" BorderBrush="{DynamicResource AccentColorBrush}" AnimateOpacity="True" >
 
             <Grid Height="75" VerticalAlignment="Top" Width="1051">
                 <TextBlock FontFamily="./Resources/Fonts/#Purista Light" x:Name="appBarText" VerticalAlignment="Center"
@@ -168,7 +168,7 @@
                 <Button x:Name="appBarClose"  HorizontalAlignment="Left" Width="75" Content="Close" RenderTransformOrigin="1,0.52" Height="25" VerticalAlignment="Top" Margin="966,26,0,0" Click="appBarClose_Click"/>
             </Grid>
         </Controls:Flyout>
-        <Grid x:Name="installGrid" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="1090" Background="#FF252525" Margin="0,0,-18,0" Visibility="Hidden">
+        <Grid x:Name="installGrid" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="1090" Background="#FF252525" Margin="0,0,-18,0" Visibility="Hidden" d:IsHidden="True">
             <Label x:Name="workingLabel" FontFamily="./Resources/Fonts/#Purista Light" Content="Installing..." HorizontalAlignment="Center" VerticalAlignment="Center" Height="571" Width="1082" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" Margin="0,0,-10,0"/>
         </Grid>
 
