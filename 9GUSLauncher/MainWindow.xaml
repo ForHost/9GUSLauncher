@@ -95,6 +95,37 @@
                     </TabControl>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="tabEvents" Header="Events" FontFamily="./Resources/Fonts/#Purista Semibold">
+                <Grid>
+                    <TabControl Controls:TabControlHelper.IsUnderlined="True" Height="502" VerticalAlignment="Top">
+                        <TabItem x:Name="tabReadEvent" Header="Events" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent" FontFamily="./Resources/Fonts/#Purista Light"/>
+
+                        <TabItem x:Name="tabAddEvent" Header="Add Event" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent" FontFamily="./Resources/Fonts/#Purista Light">
+                            <ScrollViewer Margin="0,0,0,2">
+                                <Grid Height="709" Width="660">
+
+                                    <Calendar x:Name="eventCalendar" HorizontalAlignment="Left" Margin="442,17,0,0" VerticalAlignment="Top"/>
+                                    <TextBox x:Name="txtmissionName" HorizontalAlignment="Left" Height="23" Margin="104,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="256"/>
+                                    <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="104,68,0,0" VerticalAlignment="Top" Width="256"/>
+                                    <ComboBox x:Name="comboMap" HorizontalAlignment="Left" Margin="104,115,0,0" VerticalAlignment="Top" Width="256"/>
+                                    <TextBox x:Name="txtmissionDescription" HorizontalAlignment="Left" Height="78" Margin="0,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621"/>
+                                    <Controls:NumericUpDown x:Name="nudPlayers" HorizontalAlignment="Left" Margin="276,162,0,0" VerticalAlignment="Top" Width="84"/>
+                                    <Label Content="Mission Name:" HorizontalAlignment="Left" Margin="11,25,0,0" VerticalAlignment="Top"/>
+                                    <Label Content="Game Type:" HorizontalAlignment="Left" Margin="27,70,0,0" VerticalAlignment="Top"/>
+                                    <Label Content="Map:" HorizontalAlignment="Left" Margin="62,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.486,0.917"/>
+                                    <Label Content="Min. Players:" HorizontalAlignment="Left" Margin="195,162,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.54,1.083"/>
+                                    <Label Content="Description:" HorizontalAlignment="Left" Margin="0,209,0,0" VerticalAlignment="Top"/>
+                                    <Button x:Name="eventCreate" Content="Create" HorizontalAlignment="Left" Margin="546,625,0,0" VerticalAlignment="Top" Width="75" Click="eventCreate_Click" RenderTransformOrigin="1,0.52"/>
+                                    <Label Content="Mods:" HorizontalAlignment="Left" Margin="0,316,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.512,0.875"/>
+                                    <ListBox x:Name="modList" Margin="0,340,39,0" SelectionMode="Multiple" Height="265" VerticalAlignment="Top" >
+
+                                    </ListBox>
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
             <TabItem x:Name="tabServer" Header="Server" FontFamily="./Resources/Fonts/#Purista Semibold">
                 <Grid>
                     <Image gif:ImageBehavior.AnimatedSource="./Resources/Images/Working-under-pressure.gif" Margin="0,50,10,169"/>
@@ -102,7 +133,7 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabAdmin" Header="Administration" FontFamily="./Resources/Fonts/#Purista Semibold">
-                <ScrollViewer Margin="0,2">
+                <ScrollViewer Margin="0,2,0,0" Height="498" VerticalAlignment="Top">
                     <Grid Height="832" Width="648">
                         <GroupBox FontFamily="./Resources/Fonts/#Purista Light" Header="Web Config" HorizontalAlignment="Left" Margin="8,10,0,0" VerticalAlignment="Top" Height="353" Width="613"/>
                         <Label Content="Software:" HorizontalAlignment="Left" Margin="22,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="68"/>
@@ -160,7 +191,7 @@
                              CloseButtonVisibility="Collapsed"
                              TitleVisibility="Collapsed"
                              IsPinned="False"
-                             Height="75" BorderThickness="0" Background="#FF252525" BorderBrush="{DynamicResource AccentColorBrush}" AnimateOpacity="True" >
+                             Height="75" BorderThickness="0" Background="#FF252525" BorderBrush="{DynamicResource AccentColorBrush}" AnimateOpacity="True"  d:IsHidden="True">
 
             <Grid Height="75" VerticalAlignment="Top" Width="1051">
                 <TextBlock FontFamily="./Resources/Fonts/#Purista Light" x:Name="appBarText" VerticalAlignment="Center"

@@ -29,8 +29,10 @@ using System.Windows.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
 using _9GUSLauncher.Core;
+using _9GUSLauncher.Core.Events;
 using Newtonsoft.Json;
 using System.Windows.Media.Animation;
+using System.Collections.ObjectModel;
 
 namespace _9GUSLauncher
 {
@@ -53,6 +55,7 @@ namespace _9GUSLauncher
         public static string workingDir = myDocuments + "\\9GUSL";
         public string runningDir = System.Reflection.Assembly.GetEntryAssembly().Location;
         public static Config.Config config = null;
+        public static Core.Events.eventVar _eventVar = null;
         public static Config.softwareConfig softwareCfg = new Config.softwareConfig();
         public static bool allowLogin = true;
         public static int loginErrors = 0;
@@ -61,6 +64,9 @@ namespace _9GUSLauncher
         public static int result;
         public ProgressDialogController _controller;
         public ProgressDialogController _controller2;
+        public CookieContainer boardCookies = null;
+        
+ 
         #endregion
 
         #region Load
@@ -83,20 +89,46 @@ namespace _9GUSLauncher
 
         private async Task mainThread()
         {
-            login_button.IsEnabled = false;
-            progressRing.IsActive = true;
-            pause(3);
-            txt_Settings.Text = workingDir;
-            StandardLog("System Initialized...");
-            StandardLog("Checking App.Config...");
-            await AppConfig();
-            ReadConfig();
-            pause(1);
-            await NetworkConnect();
-            pause(1);
-            progressRing.IsActive = false;
-            
+            BackgroundWorker bgWorker = new BackgroundWorker() { WorkerReportsProgress = true };
+            bgWorker.DoWork += (s, e) =>
+            {
+                try
+                {
+                    Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
+                    {
 
+                        login_button.IsEnabled = false;
+                        progressRing.IsActive = true;
+                        pause(3);
+                        txt_Settings.Text = workingDir;
+                        StandardLog("System Initialized...");
+                        StandardLog("Checking App.Config...");
+                        await AppConfig();
+                        ReadConfig();
+                        pause(1);
+                        await NetworkConnect();
+                        pause(1);
+                        progressRing.IsActive = false;
+
+                    }));
+                   
+                }
+                catch(Exception ex)
+                { System.Windows.MessageBox.Show(ex.ToString()); }
+                
+
+            };
+            bgWorker.ProgressChanged += (s, e) =>
+            {
+
+            };
+            bgWorker.RunWorkerCompleted += (s, e) =>
+            {
+
+            };
+            bgWorker.RunWorkerAsync();
+           
+            
         }
 
         #endregion
@@ -733,9 +765,25 @@ namespace _9GUSLauncher
         #region LoginSys
 
 
-        private void login_button_Click(object sender, RoutedEventArgs e)
+        private async void login_button_Click(object sender, RoutedEventArgs e)
         {
-            login();
+            BackgroundWorker bgWorker = new BackgroundWorker() { WorkerReportsProgress = true };
+            bgWorker.DoWork += (s, ee) =>
+            {
+                try
+                {
+                    Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
+                    {
+                        login();
+
+                    }));
+                }
+                catch (Exception ex)
+                { System.Windows.MessageBox.Show(ex.ToString()); }
+            };
+
+            bgWorker.RunWorkerAsync();
+            
         }
 
         void login()
@@ -747,7 +795,7 @@ namespace _9GUSLauncher
             }
             StandardLog("Logging in...");
             progressRing.IsActive = true;
-            CookieContainer boardCookies = Core.loginClass.login(softwareCfg.forumLink, Convert.ToString(this.txt_User.Text), Convert.ToString(this.txt_Pass.Password));
+            boardCookies = Core.loginClass.login(softwareCfg.forumLink, Convert.ToString(this.txt_User.Text), Convert.ToString(this.txt_Pass.Password));
 
             if (allowLogin == false)
             {
@@ -759,13 +807,14 @@ namespace _9GUSLauncher
             }
             if (boardCookies != null)
             {
-                MsgBox("Logged In", "You are succesfully logged in!");
+                //MsgBox("Logged In", "You are succesfully logged in!");
                 StandardLog("Logged In.");
                 progressRing.IsActive = false;
                 labelLog.Visibility = Visibility.Hidden;
                 tabControl.Visibility = Visibility.Visible;
                 //Check if administrator
                 CheckBan();
+                eventloadBase();
                 if (config.Administrators.Contains(txt_User.Text.ToString()))
                 {
                     tabAdmin.Visibility = Visibility.Visible;
@@ -1120,8 +1169,161 @@ namespace _9GUSLauncher
 
         #endregion    
 
-     
+        #region Events
+
+        public async void eventloadBase()
+        {
+            comboMap.Items.Add("Stratis");
+            comboMap.Items.Add("Altis");
+            comboMap.Items.Add("Takistan");
+            comboMap.Items.Add("Chernarous");
+            comboMap.Items.Add("Bukovina");
+
+            comboType.Items.Add("COOP");
+            comboType.Items.Add("PvP Public");
+            comboType.Items.Add("PvP Private");
+
+            try
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
+                {
+                    _controller = await this.ShowProgressAsync("Please wait...", "Loading Mods & ArmA 3 BIS Files...");
+                    _controller.SetCancelable(false);
+                    if (!string.IsNullOrEmpty(modPath))
+                    {
+                        string[] folders = System.IO.Directory.GetDirectories(modPath, "@*", System.IO.SearchOption.AllDirectories);
+
+                        foreach (string folder in folders)
+                        {
+                            string input = folder;
+                            string output = input.Split('@').Last();
+                            modList.Items.Add("@" + output);
+                        }
+                    }
+                    else
+                    {
+                        modList.Items.Add("Please Select the Mods Path and restart the Application!");
+                    }
+
+                    if (!Directory.Exists(workingDir + "\\Config"))
+                    {
+                        Directory.CreateDirectory(workingDir + "\\Config");
+
+                    }
+
+    
+                    if (config.events != null)
+                    {
+                        foreach (string files in config.events)
+                        {            
+                            DownloadFiles(files);
+                        }
+                    }
+                    pause(5);
+                    await _controller.CloseAsync();
+                        
+                }));
+            }
+            catch (Exception ex)
+            { System.Windows.MessageBox.Show(ex.ToString()); }
+       
+           
+            
+            
+
+        }
+
+        private void DownloadFiles(string files)
+        {
+            WebClient wb = new WebClient();
+
+            if (!System.IO.File.Exists(workingDir + "\\Config\\" + files))
+            {
+                wb.DownloadFileAsync(new Uri(config.webConfig + files), workingDir + "\\Config\\" + files);
+            }
+        }
+
+        private async void eventCreate_Click(object sender, RoutedEventArgs e)
+        {
+           if(string.IsNullOrEmpty(txtmissionName.Text) ||
+              string.IsNullOrEmpty(comboMap.SelectedItem.ToString()) ||
+              string.IsNullOrEmpty(Convert.ToString(nudPlayers.Value)) ||
+              string.IsNullOrEmpty(txtmissionDescription.Text))
+           {
+               MsgBox("Error", "Please compile all field before create the event!");
+               return;
+           }
+            if(System.IO.File.Exists(workingDir + "\\Config\\" + txtmissionName.Text))
+            {
+                MsgBox("Error", "A Event with this name already exist!");
+                return;
+            }
+
+            BackgroundWorker bgWorker = new BackgroundWorker() { WorkerReportsProgress = true };
+            bgWorker.DoWork += (s, ee) =>
+            {
+                try
+                {
+                    Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
+                    {
+                       
+
+                        _eventVar = new eventVar();
+                        List<string> _modList = new List<string>();
+                        foreach (string item in modList.SelectedItems)
+                        {
+                            _modList.Add(item);
+                        }
+                        _eventVar.eventName = txtmissionName.Text;
+                        _eventVar.eventDate = Convert.ToDateTime(eventCalendar.SelectedDate);
+                        _eventVar.eventMap = comboMap.SelectedItem.ToString();
+                        _eventVar.eventType = comboType.SelectedItem.ToString();
+                        _eventVar.eventMinPlayers = Convert.ToInt16(nudPlayers.Value);
+                        _eventVar.eventDescription = txtmissionDescription.Text;
+                        _eventVar.eventMods = _modList.ToArray();
+                        Core.Events.MissionFile.Create.File(txtmissionName.Text.Replace(" ", "_"));
+                        Core.Events.MissionFile.Upload.File(txtmissionName.Text.Replace(" ", "_"));
+                        List<string> eventsList = new List<string>();
+                        if(config.events != null)
+                        {
+                            foreach (string item in config.events)
+                            {
+                                eventsList.Add(item);
+                            }
+                        }
+                        
+                        eventsList.Add(txtmissionName.Text.Replace(" ", "_"));
+                        config.events = eventsList.ToArray();
+                        Core.JsonUpdate.Create.File();
+                        Core.JsonUpdate.Upload.File();
+                        
+
+                    }));
+
+                }
+                catch (Exception ex)
+                { System.Windows.MessageBox.Show(ex.ToString()); }
+            };
+            bgWorker.RunWorkerCompleted += async (s, ee) =>
+            {
+                pause(5);
+                await _controller.CloseAsync();
+            };
+
+            bgWorker.RunWorkerAsync();
+            _controller = await this.ShowProgressAsync("Please wait...", "Creating Online Event...");
+            _controller.SetCancelable(false);
+            _controller.SetIndeterminate();
+
+
+
+        }
+
+        #endregion
+
+        
+
 
     }
 }
-
+   

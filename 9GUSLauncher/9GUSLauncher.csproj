@@ -103,6 +103,9 @@
     </Compile>
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\softwareConfig.cs" />
+    <Compile Include="Core\Events\eventVar.cs" />
+    <Compile Include="Core\Events\MissionFile\Create.cs" />
+    <Compile Include="Core\Events\MissionFile\Upload.cs" />
     <Compile Include="Core\JsonUpdate\Create.cs" />
     <Compile Include="Core\JsonUpdate\Upload.cs" />
     <Compile Include="Core\loginClass.cs" />
@@ -203,6 +206,7 @@
   <ItemGroup>
     <Resource Include="Resources\Images\9GU_4.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterResolveReferences">
     <ItemGroup>

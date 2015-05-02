@@ -20,6 +20,7 @@ namespace _9GUSLauncher.Config
 
         public string jsonConfig = ""; //https or http
         public string updateFile = ""; //https or http
+        public string eventsLocation = "";
 
         //Master Server
 
@@ -27,7 +28,7 @@ namespace _9GUSLauncher.Config
 
         //String Cipher Key
 
-        public readonly string cipherKey = ""; //djkoi123ezKSAOq2341s
+        public readonly string cipherKey = "";
 
         //Login System Platform
 

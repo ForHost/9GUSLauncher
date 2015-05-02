@@ -21,5 +21,6 @@ namespace _9GUSLauncher.Config
         public string webConfig_News { get; set; }
         public string[] whiteList { get; set; }
         public string[] banList { get; set; }
+        public string[] events { get; set; }
     }
 }
