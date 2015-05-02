@@ -17,4 +17,3 @@ namespace _9GUSLauncher.Core.Events
         public string[] eventMods { get; set; }
     }
 }
-
