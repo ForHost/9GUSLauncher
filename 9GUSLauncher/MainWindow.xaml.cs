@@ -531,12 +531,19 @@ namespace _9GUSLauncher
 
         private void modPathBtn_Click(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog modPath = new FolderBrowserDialog();
+            FolderBrowserDialog modPathDialog = new FolderBrowserDialog();
 
 
-            if (modPath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (modPathDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                modPathTxt.Text = modPath.SelectedPath;
+                modPathTxt.Text = modPathDialog.SelectedPath;
+                if(modPath != modPathDialog.SelectedPath)
+                {
+                    System.Windows.MessageBox.Show("Mod Path Update. Press OK to restart the Application.", "Restarting...", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Process.Start(workingDir + "\\" + assemblyName + ".exe");
+                    Environment.Exit(0);
+                }
+                
             }
         }
         #endregion
@@ -1203,6 +1210,7 @@ namespace _9GUSLauncher
                     else
                     {
                         modList.Items.Add("Please Select the Mods Path and restart the Application!");
+                        eventCreate.IsEnabled = false;
                     }
 
                     if (!Directory.Exists(workingDir + "\\Config"))
