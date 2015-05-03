@@ -1,10 +1,12 @@
 # 9GUSLauncher - Dev.ForHost
+
 This project has been started from a [italian community](https://9thgenericunit.com) to facilitate the use of ArmA 3 Client.<br>
 We are currently working on the coding side to release a first version under the [9GU](https://9thgenericunit.com) brand.
 <br>
 ### The Idea
-This software has many features, and will be mainly directed to the communities / clans.<br>
-Everyone can personalize the software as you want.<br>
+All project born to make something better, resolving everyday life little problems that in our case are organizing events, start a dedicated server, manage mods, and so on… We want to bring our contribution to improve the Arma 3 Clans organization providing an intuitive platform to manage all the key aspects of daily activities.
+This software has many features, which anyone can benefit and is mainly directed to Communities and Clans. All features are fully customizable with the aim to give to all the possibility to have their own personal software.
+We hope that our efforts will lead to a cooperation with other programmers that can improve with us the features of this software making it better and better.
 The Main IDEA is to give the possibility to have the own software for each community / clan.<br>
 ### Features
 - Login System based on Forum/WebSite Credentials<br>
