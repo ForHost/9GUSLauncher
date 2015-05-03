@@ -65,6 +65,8 @@ namespace _9GUSLauncher
         public ProgressDialogController _controller;
         public ProgressDialogController _controller2;
         public CookieContainer boardCookies = null;
+        public List<string> eventListVisible = new List<string>();
+        public bool eventUpdating = false;
         
  
         #endregion
@@ -531,12 +533,19 @@ namespace _9GUSLauncher
 
         private void modPathBtn_Click(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog modPath = new FolderBrowserDialog();
+            FolderBrowserDialog modPathDialog = new FolderBrowserDialog();
 
 
-            if (modPath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (modPathDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                modPathTxt.Text = modPath.SelectedPath;
+                modPathTxt.Text = modPathDialog.SelectedPath;
+                if (modPath != modPathDialog.SelectedPath)
+                {
+                    System.Windows.MessageBox.Show("Mod Path Update. Press OK to restart the Application.", "Restarting...", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Process.Start(workingDir + "\\" + assemblyName + ".exe");
+                    Environment.Exit(0);
+                }
+
             }
         }
         #endregion
@@ -842,6 +851,8 @@ namespace _9GUSLauncher
                 }
             }
         }
+
+        
 
         private void CheckBan()
         {
@@ -1171,64 +1182,139 @@ namespace _9GUSLauncher
 
         #region Events
 
+        #region jsonEvent
         public async void eventloadBase()
         {
-            comboMap.Items.Add("Stratis");
-            comboMap.Items.Add("Altis");
-            comboMap.Items.Add("Takistan");
-            comboMap.Items.Add("Chernarous");
-            comboMap.Items.Add("Bukovina");
-
-            comboType.Items.Add("COOP");
-            comboType.Items.Add("PvP Public");
-            comboType.Items.Add("PvP Private");
-
-            try
+            if(eventUpdating == false)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
+                comboMap.Items.Add("Stratis");
+                comboMap.Items.Add("Altis");
+                comboMap.Items.Add("Takistan");
+                comboMap.Items.Add("Chernarous");
+                comboMap.Items.Add("Bukovina");
+
+                comboType.Items.Add("COOP");
+                comboType.Items.Add("PvP Public");
+                comboType.Items.Add("PvP Private");
+
+                try
                 {
-                    _controller = await this.ShowProgressAsync("Please wait...", "Loading Mods & ArmA 3 BIS Files...");
-                    _controller.SetCancelable(false);
-                    if (!string.IsNullOrEmpty(modPath))
+                    Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
                     {
-                        string[] folders = System.IO.Directory.GetDirectories(modPath, "@*", System.IO.SearchOption.AllDirectories);
-
-                        foreach (string folder in folders)
+                        _controller = await this.ShowProgressAsync("Please wait...", "Setting up Events & Configs...\r\n\r\nThis operation may take some minutes...");
+                        _controller.SetCancelable(false);
+                        if (!string.IsNullOrEmpty(modPath))
                         {
-                            string input = folder;
-                            string output = input.Split('@').Last();
-                            modList.Items.Add("@" + output);
+                            string[] folders = System.IO.Directory.GetDirectories(modPath, "@*", System.IO.SearchOption.AllDirectories);
+
+                            foreach (string folder in folders)
+                            {
+                                string input = folder;
+                                string output = input.Split('@').Last();
+                                modList.Items.Add("@" + output);
+                            }
                         }
-                    }
-                    else
-                    {
-                        modList.Items.Add("Please Select the Mods Path and restart the Application!");
-                    }
-
-                    if (!Directory.Exists(workingDir + "\\Config"))
-                    {
-                        Directory.CreateDirectory(workingDir + "\\Config");
-
-                    }
-
-    
-                    if (config.events != null)
-                    {
-                        foreach (string files in config.events)
-                        {            
-                            DownloadFiles(files);
+                        else
+                        {
+                            modList.Items.Add("Please Select the Mods Path and restart the Application!");
+                            eventCreate.IsEnabled = false;
                         }
-                    }
-                    pause(5);
-                    await _controller.CloseAsync();
-                        
-                }));
+
+                        if (!Directory.Exists(workingDir + "\\Config"))
+                        {
+                            Directory.CreateDirectory(workingDir + "\\Config");
+
+                        }
+                        else
+                        {
+                            Directory.Delete(workingDir + "\\Config", true);
+                            Directory.CreateDirectory(workingDir + "\\Config");
+                        }
+
+
+                        if (config.events != null)
+                        {
+                            foreach (string files in config.events)
+                            {
+                                DownloadFiles(files);
+                            }
+                        }
+
+                        //Read events files
+
+                        foreach (string _event in config.events)
+                        {
+                            eventListView.Items.Add(_event.Replace("_", " "));
+                        }
+
+                        pause(5);
+                        await _controller.CloseAsync();
+
+                    }));
+                }
+                catch (Exception ex)
+                { System.Windows.MessageBox.Show(ex.ToString()); }
             }
-            catch (Exception ex)
-            { System.Windows.MessageBox.Show(ex.ToString()); }
-       
-           
-            
+            else
+            {
+                try
+                {
+                    Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
+                    {
+                        _controller = await this.ShowProgressAsync("Please wait...", "Setting up Events & Configs...\r\n\r\nThis operation may take some minutes...");
+                        _controller.SetCancelable(false);
+                        if (!string.IsNullOrEmpty(modPath))
+                        {
+                            string[] folders = System.IO.Directory.GetDirectories(modPath, "@*", System.IO.SearchOption.AllDirectories);
+
+                            foreach (string folder in folders)
+                            {
+                                string input = folder;
+                                string output = input.Split('@').Last();
+                                modList.Items.Add("@" + output);
+                            }
+                        }
+                        else
+                        {
+                            modList.Items.Add("Please Select the Mods Path and restart the Application!");
+                            eventCreate.IsEnabled = false;
+                        }
+
+                        if (!Directory.Exists(workingDir + "\\Config"))
+                        {
+                            Directory.CreateDirectory(workingDir + "\\Config");
+
+                        }
+                        else
+                        {
+                            Directory.Delete(workingDir + "\\Config", true);
+                            Directory.CreateDirectory(workingDir + "\\Config");
+                        }
+
+
+                        if (config.events != null)
+                        {
+                            foreach (string files in config.events)
+                            {
+                                DownloadFiles(files);
+                            }
+                        }
+
+                        //Read events files
+
+                        foreach (string _event in config.events)
+                        {
+                            eventListView.Items.Add(_event.Replace("_", " "));
+                        }
+
+                        pause(5);
+                        await _controller.CloseAsync();
+
+                    }));
+                }
+                catch (Exception ex)
+                { System.Windows.MessageBox.Show(ex.ToString()); }
+            }
             
 
         }
@@ -1241,23 +1327,29 @@ namespace _9GUSLauncher
             {
                 wb.DownloadFileAsync(new Uri(config.webConfig + files), workingDir + "\\Config\\" + files);
             }
+            else
+            {
+                string localfileName = System.IO.Path.GetFileName(workingDir + "\\Config\\" + files);
+                string onlinefileName = files;
+                if (localfileName != onlinefileName)
+                {
+                    System.IO.File.Delete(workingDir + "\\Config\\" + files);
+                    wb.DownloadFileAsync(new Uri(config.webConfig + files), workingDir + "\\Config\\" + files);
+                }
+            }
         }
 
         private async void eventCreate_Click(object sender, RoutedEventArgs e)
         {
-           if(string.IsNullOrEmpty(txtmissionName.Text) ||
-              string.IsNullOrEmpty(comboMap.SelectedItem.ToString()) ||
-              string.IsNullOrEmpty(Convert.ToString(nudPlayers.Value)) ||
-              string.IsNullOrEmpty(txtmissionDescription.Text))
-           {
-               MsgBox("Error", "Please compile all field before create the event!");
-               return;
-           }
-            if(System.IO.File.Exists(workingDir + "\\Config\\" + txtmissionName.Text))
+            if (string.IsNullOrEmpty(txtmissionName.Text) ||
+               string.IsNullOrEmpty(comboMap.SelectedItem.ToString()) ||
+               string.IsNullOrEmpty(Convert.ToString(nudPlayers.Value)) ||
+               string.IsNullOrEmpty(txtmissionDescription.Text))
             {
-                MsgBox("Error", "A Event with this name already exist!");
+                MsgBox("Error", "Please compile all field before create the event!");
                 return;
             }
+
 
             BackgroundWorker bgWorker = new BackgroundWorker() { WorkerReportsProgress = true };
             bgWorker.DoWork += (s, ee) =>
@@ -1266,8 +1358,6 @@ namespace _9GUSLauncher
                 {
                     Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
                     {
-                       
-
                         _eventVar = new eventVar();
                         List<string> _modList = new List<string>();
                         foreach (string item in modList.SelectedItems)
@@ -1281,22 +1371,130 @@ namespace _9GUSLauncher
                         _eventVar.eventMinPlayers = Convert.ToInt16(nudPlayers.Value);
                         _eventVar.eventDescription = txtmissionDescription.Text;
                         _eventVar.eventMods = _modList.ToArray();
-                        Core.Events.MissionFile.Create.File(txtmissionName.Text.Replace(" ", "_"));
-                        Core.Events.MissionFile.Upload.File(txtmissionName.Text.Replace(" ", "_"));
+
+                        string eventFileName = txtmissionName.Text.Replace(" ", "_") + "_" + Convert.ToString(_eventVar.eventDate).Replace(" 00:00:00", "").Replace("/","-") + "_" + _eventVar.eventMap;
+                        Core.Events.MissionFile.Create.File(eventFileName, _eventVar);
+                        Core.Events.MissionFile.Upload.File(eventFileName);
                         List<string> eventsList = new List<string>();
-                        if(config.events != null)
+                        if (config.events != null)
                         {
                             foreach (string item in config.events)
                             {
                                 eventsList.Add(item);
                             }
                         }
-                        
-                        eventsList.Add(txtmissionName.Text.Replace(" ", "_"));
+
+                        eventsList.Add(eventFileName);
                         config.events = eventsList.ToArray();
                         Core.JsonUpdate.Create.File();
                         Core.JsonUpdate.Upload.File();
+
+
+                    }));
+
+                }
+                catch (Exception ex)
+                { System.Windows.MessageBox.Show(ex.ToString()); }
+            };
+            bgWorker.RunWorkerCompleted += async (s, ee) =>
+            {
+                pause(5);
+                await _controller.CloseAsync();
+                eventUpdating = true;
+                this.eventListView.Items.Clear();
+                this.eventListView.Items.Refresh();
+               
+                eventloadBase();
+                eventUpdating = false;
+            };
+
+            bgWorker.RunWorkerAsync();
+            _controller = await this.ShowProgressAsync("Please wait...", "Creating Online Event...");
+            _controller.SetCancelable(false);
+            _controller.SetIndeterminate();
+
+
+
+        }
+
+        #endregion
+
+        private void eventListChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(eventUpdating == false)
+            {
+                string eventSelected = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
+                eventVar _event = JsonConvert.DeserializeObject<eventVar>(System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected));
+
+                txt_eventDesc.Text = _event.eventDescription;
+                if (_event.eventMods != null)
+                {
+                    if (txt_eventMods.Text != null)
+                    {
+                        txt_eventMods.Text = null;
+                    }
+                    foreach (string mod in _event.eventMods)
+                    {
+                        txt_eventMods.Text += mod + "; ";
+                    }
+                }
+
+                txt_eventSubs.Text = "";
+
+
+                if (_event.eventSubscribers != null)
+                {
+                    foreach (string sub in _event.eventSubscribers)
+                    {
+                        txt_eventSubs.Text += sub + "; ";
+                    }
+                }
+                if (txt_eventInfos.Text != null)
+                {
+                    txt_eventInfos.Text = null;
+                }
+                txt_eventInfos.Text = "Event Date: " + _event.eventDate.ToString().Replace(" 00:00:00", "") + Environment.NewLine + "Event Type: " + _event.eventType + Environment.NewLine + "Event Minimum Players: " + _event.eventMinPlayers.ToString();
+            
+            }
+           
+        }
+
+        private async void btnSub_Click(object sender, RoutedEventArgs e)
+        {
+            
+            BackgroundWorker bgWorker = new BackgroundWorker() { WorkerReportsProgress = true };
+            bgWorker.DoWork += (s, ee) =>
+            {
+                try
+                {
+                    Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
+                    {
                         
+                            string eventSelected = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
+                            eventVar _event = JsonConvert.DeserializeObject<eventVar>(System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected));
+
+                            if(txt_eventSubs.Text.Contains(txt_User.Text))
+                            {
+                                MsgBox("Error", "You already subscribed to this event!");
+                                return;
+                            }
+
+                            txt_eventSubs.Text += txt_User.Text + "; ";
+                            List<string> subs = new List<string>();
+                            if(_event.eventSubscribers != null)
+                            {
+                                foreach (string sub in _event.eventSubscribers)
+                                {
+                                    subs.Add(sub);
+                                }
+                            }
+                            subs.Add(txt_User.Text);
+                            _event.eventSubscribers = subs.ToArray();
+                            string eventFileName = eventSelected;
+                            System.IO.File.Delete(workingDir + "\\Config\\" + eventFileName);
+                            Core.Events.MissionFile.Create.File(eventFileName, _event);
+                            Core.Events.MissionFile.Upload.File(eventFileName);
+
 
                     }));
 
@@ -1311,18 +1509,18 @@ namespace _9GUSLauncher
             };
 
             bgWorker.RunWorkerAsync();
-            _controller = await this.ShowProgressAsync("Please wait...", "Creating Online Event...");
+            _controller = await this.ShowProgressAsync("Please wait...", "Subscribing to this Event...");
             _controller.SetCancelable(false);
             _controller.SetIndeterminate();
 
-
-
+          
+            
         }
 
+
+
+
         #endregion
-
-        
-
 
     }
 }

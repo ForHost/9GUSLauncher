@@ -11,7 +11,7 @@ namespace _9GUSLauncher.Core.Events.MissionFile
 {
     public class Create
     {
-        public static void File(string fileName)
+        public static void File(string fileName, eventVar _eventVar)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace _9GUSLauncher.Core.Events.MissionFile
                         jw.Formatting = Formatting.Indented;
 
                         JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(jw, MainWindow._eventVar);
+                        serializer.Serialize(jw, _eventVar);
                     }
                 }
                 else
@@ -41,7 +41,7 @@ namespace _9GUSLauncher.Core.Events.MissionFile
                         jw.Formatting = Formatting.Indented;
 
                         JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(jw, MainWindow._eventVar);
+                        serializer.Serialize(jw, _eventVar);
                     }
                 }
             }

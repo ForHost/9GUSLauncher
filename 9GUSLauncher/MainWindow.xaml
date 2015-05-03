@@ -6,8 +6,8 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:System="clr-namespace:System;assembly=mscorlib" mc:Ignorable="d" x:Name="mainForm" x:Class="_9GUSLauncher.MainWindow"
                       xmlns:gif="http://wpfanimatedgif.codeplex.com"
                       Title="9GUSL | Developed by Dev.ForHost"
-                      Height="600"
-                      Width="1078"
+                      Height="604"
+                      Width="1083"
                       ShowTitleBar="True"
                       ShowIconOnTitleBar="True"
                       ResizeMode="CanMinimize"
@@ -96,15 +96,33 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabEvents" Header="Events" FontFamily="./Resources/Fonts/#Purista Semibold">
-                <Grid>
-                    <TabControl Controls:TabControlHelper.IsUnderlined="True" Height="502" VerticalAlignment="Top">
-                        <TabItem x:Name="tabReadEvent" Header="Events" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent" FontFamily="./Resources/Fonts/#Purista Light"/>
+                <Grid Height="504" VerticalAlignment="Top">
+                    <TabControl Controls:TabControlHelper.IsUnderlined="True" Height="504" VerticalAlignment="Top">
+                        <TabItem x:Name="tabReadEvent" Header="Events" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent" FontFamily="./Resources/Fonts/#Purista Light">
+                            <ScrollViewer Margin="0,0,0,6">
+                                <Grid Height="584">
+                                    <ListBox x:Name="eventListView" Margin="0,35,10,0" Height="157" VerticalAlignment="Top" SelectionChanged="eventListChanged">
+
+                                    </ListBox>
+                                    <Label Content="Events List" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,0,-9,0"/>
+                                    <Label Content="Event Description" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,197,-9,0"/>
+                                    <TextBox x:Name="txt_eventDesc" HorizontalAlignment="Left" Height="78" Margin="0,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621" IsReadOnly="True"/>
+                                    <Label Content="Event Mods                                        Other Infos" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,309,-9,0"/>
+                                    <TextBox x:Name="txt_eventMods" HorizontalAlignment="Left" Height="67" Margin="0,338,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306" IsReadOnly="True"/>
+                                    <Label Content="Subscribers" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,410,-23,0"/>
+                                    <TextBox x:Name="txt_eventSubs" HorizontalAlignment="Left" Height="68" Margin="0,439,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621" RenderTransformOrigin="0.506,-0.06" IsReadOnly="True"/>
+                                    <Button x:Name="btnSub" Content="Subscribe" HorizontalAlignment="Left" Margin="546,528,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1,0.52" Click="btnSub_Click"/>
+                                    <TextBox x:Name="txt_eventInfos" HorizontalAlignment="Left" Height="67" Margin="315,338,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306" IsReadOnly="True"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
 
                         <TabItem x:Name="tabAddEvent" Header="Add Event" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent" FontFamily="./Resources/Fonts/#Purista Light">
-                            <ScrollViewer Margin="0,0,0,2">
+                            <ScrollViewer Height="463" VerticalAlignment="Top">
+
                                 <Grid Height="709" Width="660">
 
-                                    <Calendar x:Name="eventCalendar" HorizontalAlignment="Left" Margin="442,17,0,0" VerticalAlignment="Top"/>
+                                    <Calendar x:Name="eventCalendar" HorizontalAlignment="Left" Margin="442,18,0,0" VerticalAlignment="Top"/>
                                     <TextBox x:Name="txtmissionName" HorizontalAlignment="Left" Height="23" Margin="104,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="256"/>
                                     <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="104,68,0,0" VerticalAlignment="Top" Width="256"/>
                                     <ComboBox x:Name="comboMap" HorizontalAlignment="Left" Margin="104,115,0,0" VerticalAlignment="Top" Width="256"/>
@@ -121,7 +139,9 @@
 
                                     </ListBox>
                                 </Grid>
+
                             </ScrollViewer>
+
                         </TabItem>
                     </TabControl>
                 </Grid>
@@ -133,7 +153,7 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabAdmin" Header="Administration" FontFamily="./Resources/Fonts/#Purista Semibold">
-                <ScrollViewer Margin="0,2,0,0" Height="498" VerticalAlignment="Top">
+                <ScrollViewer Margin="0,2,0,0" Height="492" VerticalAlignment="Top">
                     <Grid Height="832" Width="648">
                         <GroupBox FontFamily="./Resources/Fonts/#Purista Light" Header="Web Config" HorizontalAlignment="Left" Margin="8,10,0,0" VerticalAlignment="Top" Height="353" Width="613"/>
                         <Label Content="Software:" HorizontalAlignment="Left" Margin="22,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="68"/>

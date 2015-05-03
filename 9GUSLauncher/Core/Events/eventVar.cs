@@ -15,5 +15,6 @@ namespace _9GUSLauncher.Core.Events
         public string eventDescription { get; set; }
         public int eventMinPlayers { get; set; }
         public string[] eventMods { get; set; }
+        public string[] eventSubscribers { get; set; }
     }
 }
