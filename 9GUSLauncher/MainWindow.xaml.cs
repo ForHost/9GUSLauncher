@@ -539,21 +539,12 @@ namespace _9GUSLauncher
             if (modPathDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 modPathTxt.Text = modPathDialog.SelectedPath;
-<<<<<<< HEAD
-                if (modPath != modPathDialog.SelectedPath)
-=======
                 if(modPath != modPathDialog.SelectedPath)
->>>>>>> origin/master
                 {
                     System.Windows.MessageBox.Show("Mod Path Update. Press OK to restart the Application.", "Restarting...", MessageBoxButton.OK, MessageBoxImage.Information);
                     Process.Start(workingDir + "\\" + assemblyName + ".exe");
                     Environment.Exit(0);
                 }
-<<<<<<< HEAD
-
-=======
-                
->>>>>>> origin/master
             }
         }
         #endregion
