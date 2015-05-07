@@ -64,6 +64,7 @@ namespace _9GUSLauncher
         public static int result;
         public ProgressDialogController _controller;
         public ProgressDialogController _controller2;
+        public ProgressDialogController pdC;
         public CookieContainer boardCookies = null;
         public List<string> eventListVisible = new List<string>();
         public bool eventUpdating = false;
@@ -539,12 +540,13 @@ namespace _9GUSLauncher
             if (modPathDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 modPathTxt.Text = modPathDialog.SelectedPath;
-                if(modPath != modPathDialog.SelectedPath)
+                if (modPath != modPathDialog.SelectedPath)
                 {
                     System.Windows.MessageBox.Show("Mod Path Update. Press OK to restart the Application.", "Restarting...", MessageBoxButton.OK, MessageBoxImage.Information);
                     Process.Start(workingDir + "\\" + assemblyName + ".exe");
                     Environment.Exit(0);
                 }
+
             }
         }
         #endregion
@@ -1218,15 +1220,6 @@ namespace _9GUSLauncher
                             modList.Items.Add("Please Select the Mods Path and restart the Application!");
                             eventCreate.IsEnabled = false;
                         }
-<<<<<<< HEAD
-=======
-                    }
-                    else
-                    {
-                        modList.Items.Add("Please Select the Mods Path and restart the Application!");
-                        eventCreate.IsEnabled = false;
-                    }
->>>>>>> origin/master
 
                         if (!Directory.Exists(workingDir + "\\Config"))
                         {
@@ -1269,7 +1262,7 @@ namespace _9GUSLauncher
                 {
                     Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
                     {
-                        _controller = await this.ShowProgressAsync("Please wait...", "Setting up Events & Configs...\r\n\r\nThis operation may take some minutes...");
+                        _controller = await this.ShowProgressAsync("Please wait...", "Updating Events & Configs...");
                         _controller.SetCancelable(false);
                         if (!string.IsNullOrEmpty(modPath))
                         {
@@ -1288,16 +1281,24 @@ namespace _9GUSLauncher
                             eventCreate.IsEnabled = false;
                         }
 
-                        if (!Directory.Exists(workingDir + "\\Config"))
+                        while(true)
                         {
-                            Directory.CreateDirectory(workingDir + "\\Config");
-
+ 
+                            if (!Directory.Exists(workingDir + "\\Config"))
+                            {
+                                Directory.CreateDirectory(workingDir + "\\Config");
+                                break;
+                            }
+                            else
+                            {
+                                Directory.Delete(workingDir + "\\Config", true);
+                                Directory.CreateDirectory(workingDir + "\\Config");
+                                break;
+                            }
+                            
+                                
                         }
-                        else
-                        {
-                            Directory.Delete(workingDir + "\\Config", true);
-                            Directory.CreateDirectory(workingDir + "\\Config");
-                        }
+                        
 
 
                         if (config.events != null)
@@ -1315,6 +1316,7 @@ namespace _9GUSLauncher
                             eventListView.Items.Add(_event.Replace("_", " "));
                         }
 
+                        eventUpdating = false;
                         pause(5);
                         await _controller.CloseAsync();
 
@@ -1469,27 +1471,26 @@ namespace _9GUSLauncher
 
         private async void btnSub_Click(object sender, RoutedEventArgs e)
         {
-            
-            BackgroundWorker bgWorker = new BackgroundWorker() { WorkerReportsProgress = true };
-            bgWorker.DoWork += (s, ee) =>
+
+            if (txt_eventSubs.Text.Contains(txt_User.Text))
+                MsgBox("Error", "You already subscribed to this event!");
+            else
             {
-                try
+                BackgroundWorker bgWorker = new BackgroundWorker() { WorkerReportsProgress = true };
+                bgWorker.DoWork += (s, ee) =>
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
+                    try
                     {
-                        
+                        Dispatcher.BeginInvoke(DispatcherPriority.Input, new ThreadStart(async () =>
+                        {
+                            eventUpdating = true;
                             string eventSelected = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
                             eventVar _event = JsonConvert.DeserializeObject<eventVar>(System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected));
 
-                            if(txt_eventSubs.Text.Contains(txt_User.Text))
-                            {
-                                MsgBox("Error", "You already subscribed to this event!");
-                                return;
-                            }
 
                             txt_eventSubs.Text += txt_User.Text + "; ";
                             List<string> subs = new List<string>();
-                            if(_event.eventSubscribers != null)
+                            if (_event.eventSubscribers != null)
                             {
                                 foreach (string sub in _event.eventSubscribers)
                                 {
@@ -1502,27 +1503,29 @@ namespace _9GUSLauncher
                             System.IO.File.Delete(workingDir + "\\Config\\" + eventFileName);
                             Core.Events.MissionFile.Create.File(eventFileName, _event);
                             Core.Events.MissionFile.Upload.File(eventFileName);
+                            eventUpdating = false;
 
+                        }));
 
-                    }));
+                    }
+                    catch (Exception ex)
+                    { System.Windows.MessageBox.Show(ex.ToString()); }
+                };
+                bgWorker.RunWorkerCompleted += async (s, ee) =>
+                {
+                    pause(5);
+                    await pdC.CloseAsync();
+                    
 
-                }
-                catch (Exception ex)
-                { System.Windows.MessageBox.Show(ex.ToString()); }
-            };
-            bgWorker.RunWorkerCompleted += async (s, ee) =>
-            {
-                pause(5);
-                await _controller.CloseAsync();
-            };
+                };
 
-            bgWorker.RunWorkerAsync();
-            _controller = await this.ShowProgressAsync("Please wait...", "Subscribing to this Event...");
-            _controller.SetCancelable(false);
-            _controller.SetIndeterminate();
-
+                bgWorker.RunWorkerAsync();
+                pdC = await this.ShowProgressAsync("Please wait...", "Subscribing to this Event...");
+                pdC.SetCancelable(false);
+                pdC.SetIndeterminate();
+            }
+           
           
-            
         }
 
 
