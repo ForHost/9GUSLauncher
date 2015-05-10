@@ -113,6 +113,7 @@
                                     <TextBox x:Name="txt_eventSubs" HorizontalAlignment="Left" Height="68" Margin="0,439,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621" RenderTransformOrigin="0.506,-0.06" IsReadOnly="True"/>
                                     <Button x:Name="btnSub" Content="Subscribe" HorizontalAlignment="Left" Margin="546,528,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1,0.52" Click="btnSub_Click"/>
                                     <TextBox x:Name="txt_eventInfos" HorizontalAlignment="Left" Height="67" Margin="315,338,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306" IsReadOnly="True"/>
+                                    <Button x:Name="btnEventLaunchMod" Content="Launch Arma" HorizontalAlignment="Left" Margin="418,528,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="1,0.52" Click="btnEventLaunchMod_Click"/>
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
