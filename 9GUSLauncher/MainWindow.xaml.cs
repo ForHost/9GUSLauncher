@@ -1533,6 +1533,79 @@ namespace _9GUSLauncher
 
         #endregion
 
+        private void btnEventLaunchMod_Click(object sender, RoutedEventArgs e)
+        {
+            string eventSelected = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
+            eventVar _event = JsonConvert.DeserializeObject<eventVar>(System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected));
+            
+            string modArgs = null;
+            bool weHaveNotMod = false;
+
+            //MOD LIST EXTRACT
+            List<string> modListEvent = new List<string>();
+            foreach (string mod in _event.eventMods)
+            {
+                modListEvent.Add(mod);
+
+            }
+            //COMPLETE MOD STRING
+            foreach (string mod in _event.eventMods)
+            {
+                modArgs += modPath + "\\" + mod + ";";
+            }
+
+            #region Mod Comparation
+            List<string> modList = new List<string>();
+
+            string[] folders = System.IO.Directory.GetDirectories(modPath, "@*", System.IO.SearchOption.AllDirectories);
+
+            foreach (string folder in folders)
+            {
+                string input = folder;
+                string output = input.Split('@').Last();
+                modList.Add("@" + output);
+            }
+
+            List<string> missingMod = new List<string>();
+
+            var firstNotSecond = modListEvent.Except(modList).ToList();
+
+            foreach (var x in firstNotSecond)
+            {
+                missingMod.Add(x);
+
+            }
+
+            foreach (string missing in missingMod)
+            {
+                string mystring = missing;
+                if (txt_eventMods.Text.Contains(mystring))
+                    weHaveNotMod = true;
+
+            }
+            #endregion
+
+            if (weHaveNotMod == false)
+            {
+                if (!string.IsNullOrEmpty(modPath) && !string.IsNullOrEmpty(armaPath))
+                {
+                    Process arma = new Process();
+
+
+                    arma.StartInfo.FileName = ("arma3.exe");
+                    arma.StartInfo.Arguments = ("\"-mod=" + modArgs + "\"");
+                    arma.StartInfo.WorkingDirectory = armaPath;
+                    arma.Start();
+                }
+                else
+                    MsgBox("Error", "Choose your Arma path");
+            }
+            else
+            {
+                MsgBox("Error", "Some mods are missing");
+            }
+        }
+
     }
 }
    
