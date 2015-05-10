@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\softwareConfig.cs" />
+    <Compile Include="Core\CryptoService.cs" />
     <Compile Include="Core\Events\eventVar.cs" />
     <Compile Include="Core\Events\MissionFile\Create.cs" />
     <Compile Include="Core\Events\MissionFile\Upload.cs" />

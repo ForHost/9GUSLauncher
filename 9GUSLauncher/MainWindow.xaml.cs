@@ -543,6 +543,15 @@ namespace _9GUSLauncher
                 if (modPath != modPathDialog.SelectedPath)
                 {
                     System.Windows.MessageBox.Show("Mod Path Update. Press OK to restart the Application.", "Restarting...", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (armaPathTxt.Text != string.Empty)
+                    {
+                        UpdateSetting("armaPath", armaPathTxt.Text);
+                    }
+
+                    if (modPathTxt.Text != string.Empty)
+                    {
+                        UpdateSetting("modPath", modPathTxt.Text);
+                    }
                     Process.Start(workingDir + "\\" + assemblyName + ".exe");
                     Environment.Exit(0);
                 }
@@ -1446,7 +1455,9 @@ namespace _9GUSLauncher
             if(eventUpdating == false)
             {
                 string eventSelected = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
-                eventVar _event = JsonConvert.DeserializeObject<eventVar>(System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected));
+                string encryptedJson = System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected);
+                string decryptedJson = CryptoService.Load.Decrypt(encryptedJson,softwareCfg.cipherKey);
+                eventVar _event = JsonConvert.DeserializeObject<eventVar>(decryptedJson);
 
                 txt_eventDesc.Text = _event.eventDescription;
                 if (_event.eventMods != null)
@@ -1497,7 +1508,9 @@ namespace _9GUSLauncher
                         {
                             eventUpdating = true;
                             string eventSelected = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
-                            eventVar _event = JsonConvert.DeserializeObject<eventVar>(System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected));
+                            string encryptedJson = System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected);
+                            string decryptedJson = CryptoService.Load.Decrypt(encryptedJson, softwareCfg.cipherKey);
+                            eventVar _event = JsonConvert.DeserializeObject<eventVar>(decryptedJson);
 
 
                             txt_eventSubs.Text += txt_User.Text + "; ";
