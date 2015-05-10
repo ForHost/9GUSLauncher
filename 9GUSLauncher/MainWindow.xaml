@@ -7,7 +7,7 @@
                       xmlns:gif="http://wpfanimatedgif.codeplex.com"
                       Title="9GUSL | Developed by Dev.ForHost"
                       Height="604"
-                      Width="1083"
+                      Width="1079"
                       ShowTitleBar="True"
                       ShowIconOnTitleBar="True"
                       ResizeMode="CanMinimize"
@@ -85,14 +85,8 @@
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Margin="405,17,0,0" VerticalAlignment="Top" Height="544" Width="657" >
             <TabItem x:Name="tabClient" Header="Client" FontFamily="./Resources/Fonts/#Purista Semibold">
                 <Grid>
-                    <TabControl Controls:TabControlHelper.IsUnderlined="True" HorizontalAlignment="Left" Height="492" VerticalAlignment="Top" Width="651">
-                        <TabItem Header="TabItem" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent">
-                            <Grid/>
-                        </TabItem>
-                        <TabItem Header="TabItem" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent">
-                            <Grid/>
-                        </TabItem>
-                    </TabControl>
+                    <Image gif:ImageBehavior.AnimatedSource="Resources/Images/Working-under-pressure.gif" Margin="0,50,10,169"/>
+                    <Label HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontFamily="./Resources/Fonts/#Purista Light" Content="Actually Programming it! Coming Soon..." Margin="12,292,12,9" FontSize="24" Width="627" Height="201"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabEvents" Header="Events" FontFamily="./Resources/Fonts/#Purista Semibold">
@@ -101,9 +95,7 @@
                         <TabItem x:Name="tabReadEvent" Header="Events" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent" FontFamily="./Resources/Fonts/#Purista Light">
                             <ScrollViewer Margin="0,0,0,6">
                                 <Grid Height="584">
-                                    <ListBox x:Name="eventListView" Margin="0,35,10,0" Height="157" VerticalAlignment="Top" SelectionChanged="eventListChanged">
-
-                                    </ListBox>
+                                    <ListBox x:Name="eventListView" Margin="0,35,10,0" Height="157" VerticalAlignment="Top" SelectionChanged="eventListChanged" Cursor="Hand"/>
                                     <Label Content="Events List" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,0,-9,0"/>
                                     <Label Content="Event Description" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,197,-9,0"/>
                                     <TextBox x:Name="txt_eventDesc" HorizontalAlignment="Left" Height="78" Margin="0,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621" IsReadOnly="True"/>

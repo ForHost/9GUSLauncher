@@ -819,6 +819,7 @@ namespace _9GUSLauncher
             {
                 //MsgBox("Logged In", "You are succesfully logged in!");
                 StandardLog("Logged In.");
+                txt_User.IsReadOnly = true;
                 progressRing.IsActive = false;
                 labelLog.Visibility = Visibility.Hidden;
                 tabControl.Visibility = Visibility.Visible;
@@ -1193,6 +1194,7 @@ namespace _9GUSLauncher
                 comboMap.Items.Add("Takistan");
                 comboMap.Items.Add("Chernarous");
                 comboMap.Items.Add("Bukovina");
+                comboMap.Items.Add("Kunduz");
 
                 comboType.Items.Add("COOP");
                 comboType.Items.Add("PvP Public");
@@ -1247,6 +1249,8 @@ namespace _9GUSLauncher
                         {
                             eventListView.Items.Add(_event.Replace("_", " "));
                         }
+
+
 
                         pause(5);
                         await _controller.CloseAsync();
@@ -1351,6 +1355,12 @@ namespace _9GUSLauncher
 
         private async void eventCreate_Click(object sender, RoutedEventArgs e)
         {
+            if(!config.Administrators.Contains(txt_User.Text))
+            {
+                MsgBox("Error", "You MUST be and Administrator to complete this action!");
+                return;
+            }
+
             if (string.IsNullOrEmpty(txtmissionName.Text) ||
                string.IsNullOrEmpty(comboMap.SelectedItem.ToString()) ||
                string.IsNullOrEmpty(Convert.ToString(nudPlayers.Value)) ||
@@ -1431,6 +1441,8 @@ namespace _9GUSLauncher
 
         private void eventListChanged(object sender, SelectionChangedEventArgs e)
         {
+            
+
             if(eventUpdating == false)
             {
                 string eventSelected = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
@@ -1529,15 +1541,11 @@ namespace _9GUSLauncher
         }
 
 
-
-
-        #endregion
-
         private void btnEventLaunchMod_Click(object sender, RoutedEventArgs e)
         {
             string eventSelected = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
             eventVar _event = JsonConvert.DeserializeObject<eventVar>(System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected));
-            
+
             string modArgs = null;
             bool weHaveNotMod = false;
 
@@ -1604,7 +1612,12 @@ namespace _9GUSLauncher
             {
                 MsgBox("Error", "Some mods are missing");
             }
-        }
+        } 
+        
+
+        #endregion
+
+      
 
     }
 }
