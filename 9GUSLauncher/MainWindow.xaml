@@ -84,28 +84,31 @@
         <CheckBox x:Name="rememberMe" Content="Remember Me" HorizontalAlignment="Left" Margin="26,239,0,0" VerticalAlignment="Top"/>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Margin="405,17,0,0" VerticalAlignment="Top" Height="544" Width="657" >
             <TabItem x:Name="tabClient" Header="Client" FontFamily="./Resources/Fonts/#Purista Semibold">
-                <Grid>
+                <Grid Height="504" VerticalAlignment="Top" Margin="0,0,0,-2">
                     <Image gif:ImageBehavior.AnimatedSource="Resources/Images/Working-under-pressure.gif" Margin="0,50,10,169"/>
                     <Label HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontFamily="./Resources/Fonts/#Purista Light" Content="Actually Programming it! Coming Soon..." Margin="12,292,12,9" FontSize="24" Width="627" Height="201"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabEvents" Header="Events" FontFamily="./Resources/Fonts/#Purista Semibold">
-                <Grid Height="504" VerticalAlignment="Top">
-                    <TabControl Controls:TabControlHelper.IsUnderlined="True" Height="504" VerticalAlignment="Top">
+                <Grid Height="500" VerticalAlignment="Top" Margin="0,0,0,-7">
+                    <TabControl Controls:TabControlHelper.IsUnderlined="True" Height="500" VerticalAlignment="Top">
                         <TabItem x:Name="tabReadEvent" Header="Events" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent" FontFamily="./Resources/Fonts/#Purista Light">
-                            <ScrollViewer Margin="0,0,0,6">
-                                <Grid Height="584">
-                                    <ListBox x:Name="eventListView" Margin="0,35,10,0" Height="157" VerticalAlignment="Top" SelectionChanged="eventListChanged" Cursor="Hand"/>
-                                    <Label Content="Events List" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,0,-9,0"/>
-                                    <Label Content="Event Description" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,197,-9,0"/>
-                                    <TextBox x:Name="txt_eventDesc" HorizontalAlignment="Left" Height="78" Margin="0,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621" IsReadOnly="True"/>
-                                    <Label Content="Event Mods                                        Other Infos" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,309,-9,0"/>
-                                    <TextBox x:Name="txt_eventMods" HorizontalAlignment="Left" Height="67" Margin="0,338,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306" IsReadOnly="True"/>
-                                    <Label Content="Subscribers" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,410,-23,0"/>
-                                    <TextBox x:Name="txt_eventSubs" HorizontalAlignment="Left" Height="68" Margin="0,439,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621" RenderTransformOrigin="0.506,-0.06" IsReadOnly="True"/>
-                                    <Button x:Name="btnSub" Content="Subscribe" HorizontalAlignment="Left" Margin="546,528,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1,0.52" Click="btnSub_Click"/>
-                                    <TextBox x:Name="txt_eventInfos" HorizontalAlignment="Left" Height="67" Margin="315,338,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306" IsReadOnly="True"/>
-                                    <Button x:Name="btnEventLaunchMod" Content="Launch Arma" HorizontalAlignment="Left" Margin="418,528,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="1,0.52" Click="btnEventLaunchMod_Click"/>
+                            <ScrollViewer Margin="0,0,0,-3">
+                                <Grid Height="998">
+                                    <ListBox x:Name="eventListView" Margin="0,57,10,0" Height="206" VerticalAlignment="Top" SelectionChanged="eventListChanged" Cursor="Hand"/>
+                                    <Label Content="Events List" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,16,-23,0"/>
+                                    <Label Content="Event Description" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,275,-23,0"/>
+                                    <TextBox x:Name="txt_eventDesc" HorizontalAlignment="Left" Height="78" Margin="0,304,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621" IsReadOnly="True"/>
+                                    <Label Content="Event Mods                                        Subscribers" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-29,387,-14,0"/>
+                                    <Label Content="Other Infos" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.483,1.962" FontFamily="Consolas" Width="674" HorizontalContentAlignment="Center" Margin="-20,544,-23,0"/>
+                                    <Button x:Name="btnSub" Content="Subscribe" HorizontalAlignment="Left" Margin="546,654,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1,0.52" Click="btnSub_Click"/>
+                                    <TextBox x:Name="txt_eventInfos" HorizontalAlignment="Left" Height="67" Margin="0,573,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621" IsReadOnly="True"/>
+                                    <Button x:Name="btnEventLaunchMod" Content="Launch Arma" HorizontalAlignment="Left" Margin="324,654,0,0" VerticalAlignment="Top" Width="123" RenderTransformOrigin="1,0.52" Click="btnEventLaunchMod_Click"/>
+                                    <ListBox x:Name="eventListViewMods" Margin="0,416,321,0" Height="123" VerticalAlignment="Top" Cursor="Hand"/>
+                                    <ListBox x:Name="eventListViewSubs" Margin="315,416,10,0" Cursor="Hand" Height="123" VerticalAlignment="Top"/>
+                                    <Button x:Name="btnUnsub" Content="unsubscribe" HorizontalAlignment="Left" Margin="452,654,0,0" VerticalAlignment="Top" Width="89" RenderTransformOrigin="1,0.52" Click="btnUnsub_Click"/>
+                                    <CheckBox x:Name="eventClosedCheck" Content="Subscription Status: {0}" HorizontalAlignment="Left" Margin="0,654,0,0" VerticalAlignment="Top" Height="25" RenderTransformOrigin="1.96,0.92"/>
+
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
@@ -136,11 +139,32 @@
                             </ScrollViewer>
 
                         </TabItem>
+                        <TabItem x:Name="tabModEvent" Header="Modify Event" Controls:ControlsHelper.HeaderFontSize="18" Background="Transparent" FontFamily="./Resources/Fonts/#Purista Light">
+                            <ScrollViewer Height="463" VerticalAlignment="Top">
+                                <Grid Height="709" Width="660">
+                                    <Calendar x:Name="eventCalendarMod" HorizontalAlignment="Left" Margin="442,18,0,0" VerticalAlignment="Top"/>
+                                    <TextBox x:Name="txtmissionNameMod" HorizontalAlignment="Left" Height="23" Margin="104,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="256" Text="To Modify an event, select it from event list"/>
+                                    <ComboBox x:Name="comboTypeMod" HorizontalAlignment="Left" Margin="104,68,0,0" VerticalAlignment="Top" Width="256"/>
+                                    <ComboBox x:Name="comboMapMod" HorizontalAlignment="Left" Margin="104,115,0,0" VerticalAlignment="Top" Width="256"/>
+                                    <TextBox x:Name="txtmissionDescriptionMod" HorizontalAlignment="Left" Height="78" Margin="0,233,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="621"/>
+                                    <Controls:NumericUpDown x:Name="nudPlayersMod" HorizontalAlignment="Left" Margin="276,162,0,0" VerticalAlignment="Top" Width="84"/>
+                                    <Label Content="Mission Name:" HorizontalAlignment="Left" Margin="11,25,0,0" VerticalAlignment="Top"/>
+                                    <Label Content="Game Type:" HorizontalAlignment="Left" Margin="27,70,0,0" VerticalAlignment="Top"/>
+                                    <Label Content="Map:" HorizontalAlignment="Left" Margin="62,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.486,0.917"/>
+                                    <Label Content="Min. Players:" HorizontalAlignment="Left" Margin="195,162,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.54,1.083"/>
+                                    <Label Content="Description:" HorizontalAlignment="Left" Margin="0,209,0,0" VerticalAlignment="Top"/>
+                                    <Button x:Name="eventMod" Content="Modify" HorizontalAlignment="Left" Margin="546,625,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="1,0.52" Click="eventMod_Click"/>
+                                    <Label Content="Mods:" HorizontalAlignment="Left" Margin="0,316,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.512,0.875"/>
+                                    <ListBox x:Name="modListMod" Margin="0,340,39,0" SelectionMode="Multiple" Height="265" VerticalAlignment="Top" >
+                                    </ListBox>
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
                     </TabControl>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabServer" Header="Server" FontFamily="./Resources/Fonts/#Purista Semibold">
-                <Grid>
+                <Grid Height="504" VerticalAlignment="Top" Margin="0,0,0,-2">
                     <Image gif:ImageBehavior.AnimatedSource="./Resources/Images/Working-under-pressure.gif" Margin="0,50,10,169"/>
                     <Label HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontFamily="./Resources/Fonts/#Purista Light" Content="Actually Programming it! Coming Soon..." Margin="10,288,10,5" FontSize="24" Width="627" Height="201"/>
                 </Grid>

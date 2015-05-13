@@ -107,6 +107,7 @@
     <Compile Include="Core\Events\eventVar.cs" />
     <Compile Include="Core\Events\MissionFile\Create.cs" />
     <Compile Include="Core\Events\MissionFile\Upload.cs" />
+    <Compile Include="Core\Events\subscriptionStatus.cs" />
     <Compile Include="Core\JsonUpdate\Create.cs" />
     <Compile Include="Core\JsonUpdate\Upload.cs" />
     <Compile Include="Core\loginClass.cs" />
