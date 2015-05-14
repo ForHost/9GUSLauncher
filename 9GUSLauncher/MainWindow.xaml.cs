@@ -1295,7 +1295,9 @@ namespace _9GUSLauncher
                         if (!string.IsNullOrEmpty(modPath))
                         {
                             string[] folders = System.IO.Directory.GetDirectories(modPath, "@*", System.IO.SearchOption.AllDirectories);
-
+                            modList.Items.Clear();
+                            modListMod.Items.Clear();
+                            
                             foreach (string folder in folders)
                             {
                                 string input = folder;
@@ -1481,10 +1483,7 @@ namespace _9GUSLauncher
                 txt_eventDesc.Text = _event.eventDescription;
                 if (_event.eventMods != null)
                 {
-                    if (eventListViewMods.HasItems == true)
-                    {
-                        eventListViewMods.Items.Clear();
-                    }
+                    eventListViewMods.Items.Clear();
                     foreach (string mod in _event.eventMods)
                     {
                         eventListViewMods.Items.Add(mod);
@@ -1666,10 +1665,14 @@ namespace _9GUSLauncher
         private void btnEventLaunchMod_Click(object sender, RoutedEventArgs e)
         {
             string eventSelected = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
-            eventVar _event = JsonConvert.DeserializeObject<eventVar>(System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected));
+            string encryptedJson = System.IO.File.ReadAllText(workingDir + "\\Config\\" + eventSelected);
+            string decryptedJson = CryptoService.Load.Decrypt(encryptedJson, softwareCfg.cipherKey);
+            _eventFileName = this.eventListView.SelectedItem.ToString().Replace(" ", "_");
+            eventVar _event = JsonConvert.DeserializeObject<eventVar>(decryptedJson);
 
             string modArgs = null;
             bool weHaveNotMod = false;
+            string missMod = null;
 
             //MOD LIST EXTRACT
             List<string> modListEvent = new List<string>();
@@ -1703,7 +1706,7 @@ namespace _9GUSLauncher
             foreach (var x in firstNotSecond)
             {
                 missingMod.Add(x);
-
+                missMod += x + "; ";
             }
 
             foreach (string missing in missingMod)
@@ -1728,11 +1731,11 @@ namespace _9GUSLauncher
                     arma.Start();
                 }
                 else
-                    MsgBox("Error", "Choose your Arma path");
+                    MsgBox("Error", "Choose your Arma path and Mods path");
             }
             else
             {
-                MsgBox("Error", "Some mods are missing");
+                MsgBox("Error", "Some mods are missing " + missMod);
             }
         }
 
@@ -1775,6 +1778,16 @@ namespace _9GUSLauncher
                         _eventVar.eventMinPlayers = Convert.ToInt16(nudPlayersMod.Value);
                         _eventVar.eventDescription = txtmissionDescriptionMod.Text;
                         _eventVar.eventMods = _modList.ToArray();
+                        List<string> subs = new List<string>();
+                        string[] _subs = null;
+                        foreach (string sub in eventListViewSubs.Items)
+                        {
+                            subs.Add(sub);
+                        }
+
+                        _subs = subs.ToArray();
+
+                        _eventVar.eventSubscribers = _subs;
 
                         string eventFileName = txtmissionNameMod.Text.Replace(" ", "_") + "_" + Convert.ToString(_eventVar.eventDate).Replace(" 00:00:00", "").Replace("/", "-") + "_" + _eventVar.eventMap;
 
